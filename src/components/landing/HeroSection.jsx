@@ -46,12 +46,11 @@ export default function HeroSection({ heroImage }) {
       {/* Recruiter soldier right side */}
       <div className="absolute right-0 bottom-0 top-0 w-2/5 hidden xl:block pointer-events-none z-0">
         <img
-          src="https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/f4fbc632f_generated_image.png"
+          src="https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/62be7c8c3_index.png"
           alt=""
-          className="w-full h-full object-cover object-left-top opacity-30"
-          style={{ maskImage: 'linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 100%)' }}
+          className="w-full h-full object-cover object-center opacity-35"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B] via-[#0A0A0B]/60 to-transparent" />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-0">

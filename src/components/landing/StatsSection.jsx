@@ -16,9 +16,9 @@ export default function StatsSection() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5" />
         {/* Background medic */}
         <img
-          src="https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/e584d5717_generated_image.png"
+          src="https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/40b046b1b_Medik.png"
           alt=""
-          className="absolute right-0 top-0 h-full w-1/3 object-cover object-center opacity-5 pointer-events-none hidden lg:block"
+          className="absolute right-0 top-0 h-full w-1/3 object-cover object-center opacity-8 pointer-events-none hidden lg:block"
         />
       </div>
 

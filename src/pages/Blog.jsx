@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
-import { Clock, Eye, ArrowRight, BookOpen } from 'lucide-react';
+import { Clock, Eye, ArrowRight, BookOpen, X, ArrowLeft, Home } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/landing/Navbar';
 import FooterSection from '../components/landing/FooterSection';
+import ReactMarkdown from 'react-markdown';
 
 const CATEGORY_LABELS = {
   documents: 'Документы', medical: 'Медкомиссия', family: 'Семье',
@@ -29,6 +30,8 @@ const CATEGORY_COLORS = {
 export default function Blog() {
   const [articles, setArticles] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [selectedArticle, setSelectedArticle] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     base44.entities.Article.filter({ published: true }, '-views', 20).then(setArticles);
@@ -37,11 +40,104 @@ export default function Blog() {
   const filtered = filter === 'all' ? articles : articles.filter(a => a.category === filter);
   const categories = [...new Set(articles.map(a => a.category))];
 
+  const openArticle = async (article) => {
+    // Increment views
+    base44.entities.Article.update(article.id, { views: (article.views || 0) + 1 }).catch(() => {});
+    setSelectedArticle(article);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const closeArticle = () => {
+    setSelectedArticle(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Article detail view
+  if (selectedArticle) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <Navbar />
+        <div className="pt-16">
+          {/* Top bar */}
+          <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-xl border-b border-white/5 px-4 py-3">
+            <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+              <button
+                onClick={closeArticle}
+                className="flex items-center gap-2 text-sm text-foreground/60 hover:text-primary transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" /> Назад к статьям
+              </button>
+              <div className="flex items-center gap-3">
+                <Link to="/">
+                  <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase text-xs tracking-wider">
+                    Подать заявку
+                  </Button>
+                </Link>
+                <button onClick={closeArticle} className="text-foreground/40 hover:text-foreground/70 transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <article className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium mb-6 ${CATEGORY_COLORS[selectedArticle.category]}`}>
+              <BookOpen className="w-3 h-3" />
+              {CATEGORY_LABELS[selectedArticle.category]}
+            </div>
+            <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase leading-tight mb-4">
+              {selectedArticle.title}
+            </h1>
+            <div className="flex items-center gap-4 text-sm text-foreground/40 mb-8 pb-8 border-b border-white/5">
+              <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {selectedArticle.reading_time} мин чтения</span>
+              <span className="flex items-center gap-1"><Eye className="w-4 h-4" /> {selectedArticle.views} просмотров</span>
+            </div>
+            <div className="prose prose-invert prose-primary max-w-none text-foreground/80 leading-relaxed">
+              <ReactMarkdown>{selectedArticle.content}</ReactMarkdown>
+            </div>
+
+            {/* CTA at bottom of article */}
+            <div className="mt-12 p-6 bg-primary/5 border border-primary/20 rounded-2xl text-center">
+              <p className="font-display text-xl font-bold uppercase mb-2">Готовы служить по контракту?</p>
+              <p className="text-foreground/50 text-sm mb-4">Оставьте заявку — мы свяжемся в течение 30 минут</p>
+              <Link to="/">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase tracking-wider h-12 px-8">
+                  Оставить заявку
+                </Button>
+              </Link>
+            </div>
+          </article>
+        </div>
+        <FooterSection />
+      </div>
+    );
+  }
+
+  // Article list view
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <div className="pt-16">
-        <section className="py-20">
+        {/* Exit button top bar */}
+        <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-xl border-b border-white/5 px-4 py-3">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <span className="text-sm text-foreground/40 font-display uppercase tracking-wider">Блог / Статьи</span>
+            <div className="flex items-center gap-3">
+              <Link to="/">
+                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase text-xs tracking-wider">
+                  Подать заявку
+                </Button>
+              </Link>
+              <Link to="/">
+                <Button size="sm" variant="outline" className="border-white/10 hover:border-primary/30 gap-1.5">
+                  <Home className="w-4 h-4" /> На главную
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
               <span className="text-sm font-display uppercase tracking-widest text-primary">Информация</span>
@@ -77,7 +173,8 @@ export default function Blog() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-card border border-white/5 rounded-xl p-6 hover:border-primary/20 transition-all group"
+                  className="bg-card border border-white/5 rounded-xl p-6 hover:border-primary/20 transition-all group cursor-pointer"
+                  onClick={() => openArticle(article)}
                 >
                   <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium mb-4 ${CATEGORY_COLORS[article.category]}`}>
                     <BookOpen className="w-3 h-3" />
@@ -92,14 +189,12 @@ export default function Blog() {
                       <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {article.reading_time} мин</span>
                       <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> {article.views}</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-primary/50 group-hover:text-primary transition-colors" />
+                    <span className="flex items-center gap-1 text-primary/70 group-hover:text-primary transition-colors text-xs font-medium">
+                      Читать <ArrowRight className="w-3 h-3" />
+                    </span>
                   </div>
                 </motion.div>
               ))}
-            </div>
-
-            <div className="mt-10 text-center">
-              <Link to="/"><Button variant="outline" className="border-white/10 hover:border-primary/30">← На главную</Button></Link>
             </div>
           </div>
         </section>

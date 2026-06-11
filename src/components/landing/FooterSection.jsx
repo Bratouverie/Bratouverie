@@ -2,29 +2,24 @@ import React from 'react';
 import { Shield, Phone, MessageCircle, Send, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const BROTHERHOOD_IMG = 'https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/0ffcb2cbf_generated_image.png';
+const BROTHERHOOD_IMG = 'https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/3bbdf5968_Podval.png';
 
 export default function FooterSection() {
   return (
     <footer className="relative border-t border-white/5 overflow-hidden">
-      {/* Brotherhood image background */}
       <div className="absolute inset-0 pointer-events-none">
-        <img
-          src={BROTHERHOOD_IMG}
-          alt=""
-          className="w-full h-full object-cover object-center opacity-8"
-        />
+        <img src={BROTHERHOOD_IMG} alt="" className="w-full h-full object-cover object-center opacity-5" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/95 to-background/80" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        {/* Brotherhood image visible section */}
+        {/* Brotherhood image */}
         <div className="flex justify-center mb-12">
           <div className="relative w-full max-w-2xl rounded-2xl overflow-hidden border border-primary/10">
             <img
               src={BROTHERHOOD_IMG}
               alt="Военное братство — служба по контракту 2026"
-              className="w-full h-48 sm:h-64 object-cover object-center opacity-70"
+              className="w-full h-48 sm:h-64 object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
             <div className="absolute bottom-4 left-0 right-0 text-center">
@@ -35,9 +30,7 @@ export default function FooterSection() {
           </div>
         </div>
 
-        {/* Footer content */}
         <div className="grid sm:grid-cols-3 gap-8 mb-10">
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Shield className="w-5 h-5 text-primary" />
@@ -48,7 +41,6 @@ export default function FooterSection() {
             </p>
           </div>
 
-          {/* Navigation */}
           <div>
             <h4 className="font-display text-xs uppercase tracking-widest text-foreground/40 mb-4">Навигация</h4>
             <div className="space-y-2">
@@ -65,7 +57,6 @@ export default function FooterSection() {
             </div>
           </div>
 
-          {/* Contacts */}
           <div>
             <h4 className="font-display text-xs uppercase tracking-widest text-foreground/40 mb-4">Контакты</h4>
             <div className="space-y-3">

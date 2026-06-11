@@ -15,7 +15,7 @@ import ChatWidget from '../components/landing/ChatWidget';
 import ReviewsSection from '../components/landing/ReviewsSection';
 import StatsSection from '../components/landing/StatsSection';
 
-const HERO_IMAGE = "https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/83d8f9e0b_generated_190fec93.png";
+const HERO_IMAGE = "https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/e2358557e_BPLA.png";
 
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
