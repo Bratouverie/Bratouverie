@@ -24,12 +24,14 @@ export default function HeroSection({ heroImage }) {
     e.preventDefault();
     if (!formData.full_name || !formData.phone) return;
     setLoading(true);
-    await base44.entities.Lead.create({
+    const lead = await base44.entities.Lead.create({
       ...formData,
       age: formData.age ? Number(formData.age) : undefined,
       source: 'hero_form',
       status: 'new'
     });
+    // Send Gmail notification to admin
+    base44.functions.invoke('sendLeadNotification', { lead }).catch(() => {});
     setLoading(false);
     toast.success("Заявка отправлена! Мы свяжемся с вами в течение 30 минут.");
     setFormData({ full_name: '', phone: '', region: '', age: '' });

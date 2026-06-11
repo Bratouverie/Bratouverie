@@ -12,6 +12,8 @@ import FooterSection from '../components/landing/FooterSection';
 import StickyBar from '../components/landing/StickyBar';
 import ExitPopup from '../components/landing/ExitPopup';
 import ChatWidget from '../components/landing/ChatWidget';
+import ReviewsSection from '../components/landing/ReviewsSection';
+import StatsSection from '../components/landing/StatsSection';
 
 const HERO_IMAGE = "https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/83d8f9e0b_generated_190fec93.png";
 
@@ -41,8 +43,10 @@ export default function Home() {
       <AdvantagesSection />
       <PaymentCalculator />
       <FamilyBenefits />
+      <StatsSection />
       <StepsSection />
       <SpecialtiesSection />
+      <ReviewsSection />
       <FAQSection />
       <ContactSection />
       <FooterSection />
