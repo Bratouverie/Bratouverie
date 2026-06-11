@@ -1,0 +1,43 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "author_name": {
+      "type": "string",
+      "description": "\u0418\u043c\u044f \u0430\u0432\u0442\u043e\u0440\u0430 \u043e\u0442\u0437\u044b\u0432\u0430"
+    },
+    "author_city": {
+      "type": "string",
+      "description": "\u0413\u043e\u0440\u043e\u0434 \u0430\u0432\u0442\u043e\u0440\u0430"
+    },
+    "rating": {
+      "type": "number",
+      "description": "\u041e\u0446\u0435\u043d\u043a\u0430 \u043e\u0442 1 \u0434\u043e 5"
+    },
+    "text": {
+      "type": "string",
+      "description": "\u0422\u0435\u043a\u0441\u0442 \u043e\u0442\u0437\u044b\u0432\u0430"
+    },
+    "specialty": {
+      "type": "string",
+      "description": "\u0421\u043f\u0435\u0446\u0438\u0430\u043b\u044c\u043d\u043e\u0441\u0442\u044c/\u0434\u043e\u043b\u0436\u043d\u043e\u0441\u0442\u044c"
+    },
+    "contract_year": {
+      "type": "string",
+      "description": "\u0413\u043e\u0434 \u0437\u0430\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u043a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u0430"
+    },
+    "avatar_initials": {
+      "type": "string",
+      "description": "\u0418\u043d\u0438\u0446\u0438\u0430\u043b\u044b \u0434\u043b\u044f \u0430\u0432\u0430\u0442\u0430\u0440\u0430"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "author_name",
+    "rating",
+    "text"
+  ]
+}
