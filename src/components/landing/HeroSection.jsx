@@ -41,7 +41,17 @@ export default function HeroSection({ heroImage }) {
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroImage} alt="Военная служба по контракту" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B]/95 via-[#0A0A0B]/80 to-[#0A0A0B]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B]/95 via-[#0A0A0B]/85 to-[#0A0A0B]/60" />
+      </div>
+      {/* Recruiter soldier right side */}
+      <div className="absolute right-0 bottom-0 top-0 w-2/5 hidden xl:block pointer-events-none z-0">
+        <img
+          src="https://media.base44.com/images/public/6a2ae86ed2da315a8abab314/f4fbc632f_generated_image.png"
+          alt=""
+          className="w-full h-full object-cover object-left-top opacity-30"
+          style={{ maskImage: 'linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 100%)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B] via-transparent to-transparent" />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-0">
@@ -136,14 +146,14 @@ export default function HeroSection({ heroImage }) {
               </Button>
 
               <div className="flex items-center justify-center gap-4 pt-2">
-                <a href="#" className="flex items-center gap-1.5 text-sm text-foreground/50 hover:text-primary transition-colors">
+                <a href="https://wa.me/79604164217" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm text-foreground/50 hover:text-green-400 transition-colors">
                   <MessageCircle className="w-4 h-4" /> WhatsApp
                 </a>
-                <a href="#" className="flex items-center gap-1.5 text-sm text-foreground/50 hover:text-primary transition-colors">
+                <a href="https://t.me/79898605192" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm text-foreground/50 hover:text-blue-400 transition-colors">
                   <Send className="w-4 h-4" /> Telegram
                 </a>
-                <a href="tel:88001234567" className="flex items-center gap-1.5 text-sm text-foreground/50 hover:text-primary transition-colors">
-                  <Phone className="w-4 h-4" /> 8-800
+                <a href="tel:79898605192" className="flex items-center gap-1.5 text-sm text-foreground/50 hover:text-primary transition-colors">
+                  <Phone className="w-4 h-4" /> +7 989 860-51-92
                 </a>
               </div>
             </form>
