@@ -26,11 +26,11 @@ export default function PaymentCalculator() {
     const monthly = base + rankBonus;
     const federal = 400000;
     const regional = REGIONS_DATA[region] || 300000;
-    const daily = 4240;
+    // Единовременная выплата при заключении контракта: 2.5–4.5 млн (среднее ~3.5 млн)
+    const oneTime = 3500000;
     const yearlyMonths = monthly * 12;
-    const yearlyDaily = daily * 365;
-    const total = yearlyMonths + yearlyDaily + federal + regional;
-    return { monthly, federal, regional, daily, total, yearlyMonths, yearlyDaily };
+    const total = yearlyMonths + oneTime + federal + regional;
+    return { monthly, federal, regional, oneTime, total, yearlyMonths };
   }, [region, rank, term]);
 
   return (
@@ -75,8 +75,8 @@ export default function PaymentCalculator() {
                 <p className="font-display text-2xl font-bold text-primary">{calc.monthly.toLocaleString('ru')} ₽</p>
               </div>
               <div className="bg-card border border-white/5 rounded-xl p-5">
-                <p className="text-xs text-foreground/40 uppercase tracking-wider mb-1">Суточные</p>
-                <p className="font-display text-2xl font-bold text-foreground">{calc.daily.toLocaleString('ru')} ₽/день</p>
+                <p className="text-xs text-foreground/40 uppercase tracking-wider mb-1">Единовременно</p>
+                <p className="font-display text-xl font-bold text-foreground">2,5 — 4,5 млн ₽</p>
               </div>
             </div>
           </div>
@@ -95,8 +95,8 @@ export default function PaymentCalculator() {
                 <span className="text-foreground">{calc.yearlyMonths.toLocaleString('ru')} ₽</span>
               </div>
               <div className="flex justify-between text-foreground/60">
-                <span>Суточные (365 дней)</span>
-                <span className="text-foreground">{calc.yearlyDaily.toLocaleString('ru')} ₽</span>
+                <span>Единовременная выплата (среднее)</span>
+                <span className="text-foreground">{calc.oneTime.toLocaleString('ru')} ₽</span>
               </div>
               <div className="flex justify-between text-foreground/60">
                 <span>Федеральная выплата</span>

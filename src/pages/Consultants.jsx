@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
-import { Star, Phone, MessageCircle, Award, Users, CheckCircle } from 'lucide-react';
+import { Star, CheckCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import Navbar from '../components/landing/Navbar';
 import FooterSection from '../components/landing/FooterSection';
+import ConsultantLeadModal from '../components/landing/ConsultantLeadModal';
 
 const STAGE_LABELS = {
   application: 'Подача заявки',
@@ -17,10 +18,17 @@ const STAGE_LABELS = {
 
 export default function Consultants() {
   const [consultants, setConsultants] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedConsultant, setSelectedConsultant] = useState(null);
 
   useEffect(() => {
     base44.entities.Consultant.filter({ is_active: true }).then(setConsultants);
   }, []);
+
+  const openModal = (consultant) => {
+    setSelectedConsultant(consultant);
+    setModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -35,9 +43,15 @@ export default function Consultants() {
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold uppercase mt-2 mb-4">
                 Наши <span className="text-primary">консультанты</span>
               </h1>
-              <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+              <p className="text-lg text-foreground/60 max-w-2xl mx-auto mb-8">
                 Каждый специалист сопровождает вас на определённом этапе оформления контракта — от первого звонка до подписания.
               </p>
+              <Button
+                onClick={() => openModal(null)}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase tracking-wider h-12 px-8"
+              >
+                Оставить заявку
+              </Button>
             </motion.div>
           </div>
         </section>
@@ -69,7 +83,6 @@ export default function Consultants() {
                   transition={{ delay: i * 0.1 }}
                   className="bg-card border border-white/5 rounded-2xl p-6 hover:border-primary/20 transition-all"
                 >
-                  {/* Avatar */}
                   <div className="flex items-start gap-4 mb-5">
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center flex-shrink-0">
                       <span className="font-display text-2xl font-bold text-primary">
@@ -87,7 +100,6 @@ export default function Consultants() {
                     </div>
                   </div>
 
-                  {/* Stage badge */}
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 rounded-full text-xs text-primary font-medium mb-4">
                     <CheckCircle className="w-3 h-3" />
                     {STAGE_LABELS[c.stage]}
@@ -95,13 +107,11 @@ export default function Consultants() {
 
                   <p className="text-sm text-foreground/60 leading-relaxed mb-5">{c.bio}</p>
 
-                  {/* Specialization */}
                   <p className="text-xs text-foreground/40 mb-4">
                     <span className="text-foreground/60 font-medium">Специализация: </span>
                     {c.specialization}
                   </p>
 
-                  {/* Stats */}
                   <div className="flex gap-4 py-4 border-t border-white/5 mb-5">
                     <div className="text-center flex-1">
                       <p className="font-display text-xl font-bold text-primary">{c.contracts_helped}+</p>
@@ -117,11 +127,12 @@ export default function Consultants() {
                     </div>
                   </div>
 
-                  <a href="#hero">
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase text-sm tracking-wider">
-                      Записаться к специалисту
-                    </Button>
-                  </a>
+                  <Button
+                    onClick={() => openModal(c)}
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase text-sm tracking-wider"
+                  >
+                    Записаться к специалисту
+                  </Button>
                 </motion.div>
               ))}
             </div>
@@ -135,6 +146,12 @@ export default function Consultants() {
         </div>
       </div>
       <FooterSection />
+
+      <ConsultantLeadModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        consultantName={selectedConsultant?.name}
+      />
     </div>
   );
 }

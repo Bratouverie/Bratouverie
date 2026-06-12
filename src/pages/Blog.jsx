@@ -85,26 +85,62 @@ export default function Blog() {
               <BookOpen className="w-3 h-3" />
               {CATEGORY_LABELS[selectedArticle.category]}
             </div>
-            <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase leading-tight mb-4">
+            <h1 className="font-display text-3xl sm:text-5xl font-bold uppercase leading-tight mb-6">
               {selectedArticle.title}
             </h1>
-            <div className="flex items-center gap-4 text-sm text-foreground/40 mb-8 pb-8 border-b border-white/5">
+
+            {/* Hero info block */}
+            {selectedArticle.excerpt && (
+              <div className="bg-primary/5 border-l-4 border-primary rounded-r-xl p-5 mb-8 text-base text-foreground/80 leading-relaxed italic">
+                {selectedArticle.excerpt}
+              </div>
+            )}
+
+            <div className="flex items-center gap-4 text-sm text-foreground/40 mb-10 pb-8 border-b border-white/5">
               <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {selectedArticle.reading_time} мин чтения</span>
               <span className="flex items-center gap-1"><Eye className="w-4 h-4" /> {selectedArticle.views} просмотров</span>
             </div>
-            <div className="prose prose-invert prose-primary max-w-none text-foreground/80 leading-relaxed">
+
+            {/* Article content */}
+            <div className="prose prose-invert prose-primary max-w-none text-foreground/80 leading-relaxed text-base sm:text-lg
+              [&_h2]:font-display [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-bold [&_h2]:uppercase [&_h2]:text-foreground [&_h2]:mt-10 [&_h2]:mb-4
+              [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-primary [&_h3]:mt-8 [&_h3]:mb-3
+              [&_p]:leading-8 [&_p]:mb-4
+              [&_ul]:space-y-2 [&_li]:leading-7
+              [&_strong]:text-foreground [&_strong]:font-bold">
               <ReactMarkdown>{selectedArticle.content}</ReactMarkdown>
             </div>
 
+            {/* Tags */}
+            {selectedArticle.tags?.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-10 pt-8 border-t border-white/5">
+                {selectedArticle.tags.map(tag => (
+                  <span key={tag} className="px-3 py-1 bg-white/5 rounded-full text-xs text-foreground/40">#{tag}</span>
+                ))}
+              </div>
+            )}
+
             {/* CTA at bottom of article */}
-            <div className="mt-12 p-6 bg-primary/5 border border-primary/20 rounded-2xl text-center">
-              <p className="font-display text-xl font-bold uppercase mb-2">Готовы служить по контракту?</p>
-              <p className="text-foreground/50 text-sm mb-4">Оставьте заявку — мы свяжемся в течение 30 минут</p>
-              <Link to="/">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase tracking-wider h-12 px-8">
-                  Оставить заявку
-                </Button>
-              </Link>
+            <div className="mt-12 p-8 bg-primary/5 border border-primary/20 rounded-2xl text-center">
+              <p className="font-display text-2xl font-bold uppercase mb-2">Готовы служить по контракту?</p>
+              <p className="text-foreground/50 text-sm mb-6">Оставьте заявку — мы свяжемся в течение 30 минут</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link to="/">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold uppercase tracking-wider h-12 px-8">
+                    Оставить заявку
+                  </Button>
+                </Link>
+                <a href="https://wa.me/79604164217" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="border-green-400/30 text-green-400 hover:bg-green-400/10 h-12 px-6">
+                    WhatsApp
+                  </Button>
+                </a>
+                <a href="https://t.me/79898605192" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="border-blue-400/30 text-blue-400 hover:bg-blue-400/10 h-12 px-6">
+                    Telegram
+                  </Button>
+                </a>
+              </div>
             </div>
           </article>
         </div>
